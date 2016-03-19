@@ -17,7 +17,7 @@ for sonDir in os.listdir(dir):
     except OSError, e:
             log = open('error.log', 'a', 1024)
             currenttime = time.strftime('%Y-%m-%d %X', time.localtime( time.time() ) )
-            log.write(str(currenttime) + ' ' + str(e) + "\n")
+            log.write('[Error]: ' + str(currenttime) + ' ' + str(e) + "\n")
             log.close()
     mirror['mirrorName'] = sonDir
     mirror['storage'] = str('%.2f' % (size/1024.0/1024/1024))+'G'
@@ -33,5 +33,5 @@ f.write(json.dumps(data))
 f.close()
 log = open('success.log', 'a', 1024)
 currenttime = time.strftime('%Y-%m-%d %X', time.localtime( time.time() ) )
-log.write('Updated at: ' + str(currenttime) + ' cost ' + str(data['update_cost_time']) + "s\n")
+log.write('[Info] Updated at: ' + str(currenttime) + ' cost ' + str(data['update_cost_time']) + "s\n")
 log.close()
