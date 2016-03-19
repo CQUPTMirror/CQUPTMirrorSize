@@ -3,7 +3,7 @@
 import os
 import json
 import time
-dir = ''
+dir = '/data/mirror'
 size = 0
 data = {'mirror_list':'', 'update_time':0, 'update_cost_time':0}
 mirrorsSize = []
