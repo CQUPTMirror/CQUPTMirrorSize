@@ -18,17 +18,20 @@ def getSize(mirrorsSize, sonDir):
     mirror['mirrorName'] = sonDir
     mirror['storage'] = str('%.2f' % (size/1024.0/1024/1024))+'G'
     mirror['lastUpdate'] = int(time.time())
-    print mirror
     mirrorsSize.append(mirror)
-
 if __name__ == '__main__':
     dir = '/data/mirror'
     size = 0
     data = {'mirror_list':'', 'update_time':0, 'update_cost_time':0}
     mirrorsSize = []
+    threadList = []
     start_time = time.time()
     for sonDir in os.listdir(dir):
-        threading.Thread(target=getSize, args=(mirrorsSize, sonDir,)).start()
+         t = threading.Thread(target=getSize, args=(mirrorsSize , sonDir,))
+         t.start()
+         threadList.append(t)
+    for t in threadList:
+        t.join()
     end_time = time.time()
     data['mirror_list'] = mirrorsSize
     data['update_time'] = int(time.time())
