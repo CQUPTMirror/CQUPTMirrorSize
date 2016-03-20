@@ -7,8 +7,10 @@ import threading
 def getSize(mirrorsSize, sonDir):
     mirror = {'mirrorName':'', 'storage':'', 'lastUpdate':''}
     size = 0
+    updatetime = []
     try:
         for root, dirs, files in os.walk(os.path.join(dir, sonDir)):
+            updatetime = updatetime + [os.path.getmtime(os.path.join(root, name)) for name in files]
             size += sum([os.path.getsize(os.path.join(root, name)) for name in files])
     except OSError, e:
             log = open('error.log', 'a', 1024)
@@ -17,8 +19,9 @@ def getSize(mirrorsSize, sonDir):
             log.close()
     mirror['mirrorName'] = sonDir
     mirror['storage'] = str('%.2f' % (size/1024.0/1024/1024))+'G'
-    mirror['lastUpdate'] = int(time.time())
+    mirror['lastUpdate'] = int(max(updatetime) if updatetime != [] else 0)
     mirrorsSize.append(mirror)
+    
 if __name__ == '__main__':
     dir = '/data/mirror'
     size = 0
