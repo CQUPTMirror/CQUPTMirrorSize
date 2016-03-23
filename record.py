@@ -44,7 +44,6 @@ if __name__ == '__main__':
     data['mirror_list'] = mirrorsSize
     data['update_time'] = int(time.time())
     data['update_cost_time'] = int(end_time - start_time)
-    exit(0)
     f = open('/data/config/main.json', 'w', 1024)
     f.write(json.dumps(data))
     f.close()
@@ -52,3 +51,4 @@ if __name__ == '__main__':
     currenttime = time.strftime('%Y-%m-%d %X', time.localtime( time.time() ) )
     log.write('[Info] Updated at: ' + str(currenttime) + ' cost ' + str(data['update_cost_time']) + "s\n")
     log.close()
+    exit(0)
