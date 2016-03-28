@@ -5,7 +5,7 @@ import json
 import time
 import threading
 def getSize(mirrorsSize, sonDir, lastupdatetime):
-    mirror = {'mirrorName':'', 'storage':'', 'lastUpdate':''}
+    mirror = {'mirrorName':'', 'storage':'', 'lastUpdate':'', 'realName':'', 'link':''}
     size = 0
     try:
         for root, dirs, files in os.walk(os.path.join(dir, sonDir)):
@@ -15,7 +15,9 @@ def getSize(mirrorsSize, sonDir, lastupdatetime):
             currenttime = time.strftime('%Y-%m-%d %X', time.localtime( time.time() ) )
             log.write('[Error]: ' + str(currenttime) + ' ' + str(e) + "\n")
             log.close()
-    mirror['mirrorName'] = sonDir
+    mirror['mirrorName'] = sonDir.capitalize()
+    mirror['realName'] = sonDir
+    mirror['link'] = sonDir + '.mirrors.cqupt.edu.cn'
     mirror['storage'] = str('%.2f' % (size/1024.0/1024/1024))+'G'
     mirror['lastUpdate'] = lastupdatetime
     mirrorsSize.append(mirror)
