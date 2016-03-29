@@ -30,12 +30,14 @@ if __name__ == '__main__':
     mirrorsSize = []
     threadList = []
     start_time = time.time()
+    #从npm的registry获取更新信息
+    npmUpdateTime = json.loads(requests.get('http://registry.mirror.cqupt.edu.cn/').text)['last_exist_sync_time']
     for sonDir in os.listdir(dir):
-        name = os.popen('ls -r '+log_dir + ' | grep '+ sonDir + ' | head -1').readline()[:-1]
+        name = os.popen('ls -r '+ log_dir + ' | grep '+ sonDir + ' | head -1').readline()[:-1]
         if name != '':
             lastupdatetime = int(os.path.getmtime(os.path.join('/var/log/rsync', name)))
         else:
-            lastupdatetime = 0
+            lastupdatetime = int(npmUpdateTime)
         t = threading.Thread(target=getSize, args=(mirrorsSize , sonDir, lastupdatetime,))
         t.start()
         threadList.append(t)
