@@ -38,7 +38,7 @@ if __name__ == '__main__':
         if name != '':
             lastupdatetime = int(os.path.getmtime(os.path.join('/var/log/rsync', name)))
         else:
-            lastupdatetime = int(npmUpdateTime)
+            lastupdatetime = int(npmUpdateTime/1000)
         t = threading.Thread(target=getSize, args=(mirrorsSize , sonDir, lastupdatetime,))
         t.start()
         threadList.append(t)
