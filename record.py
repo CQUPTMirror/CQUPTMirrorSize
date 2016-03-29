@@ -4,6 +4,7 @@ import os
 import json
 import time
 import threading
+import requests
 def getSize(mirrorsSize, sonDir, lastupdatetime):
     mirror = {'mirrorName':'', 'storage':'', 'lastUpdate':'', 'realName':'', 'link':''}
     size = 0
