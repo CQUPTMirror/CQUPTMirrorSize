@@ -23,8 +23,8 @@ def getSize(mirrorsSize, sonDir, lastupdatetime):
     mirror['lastUpdate'] = lastupdatetime
     mirrorsSize.append(mirror)
 
-def addNpm(mirrorsSize):
-    mirror = {'mirrorNmae':'Npm', 'storage':'-', 'lastupdatetime':'-', 'realName':'npm', 'link':'npm.mirrors.cqupt.edu.cn'}
+def addNpm(mirrorsSize, lastupdatetime):
+    mirror = {'mirrorNmae':'Npm', 'storage':'-', 'lastupdatetime':lastupdatetime, 'realName':'npm', 'link':'npm.mirrors.cqupt.edu.cn'}
     mirrorsSize.append(mirror)
 
 if __name__ == '__main__':
@@ -48,7 +48,7 @@ if __name__ == '__main__':
         threadList.append(t)
     for t in threadList:
         t.join()
-    addNpm(mirrorsSize)
+    addNpm(mirrorsSize, npmUpdateTime)
     end_time = time.time()
     data['mirror_list'] = mirrorsSize
     data['update_time'] = int(time.time())
