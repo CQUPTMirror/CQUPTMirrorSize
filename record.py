@@ -23,6 +23,10 @@ def getSize(mirrorsSize, sonDir, lastupdatetime):
     mirror['lastUpdate'] = lastupdatetime
     mirrorsSize.append(mirror)
 
+def addNpm(mirrorsSize):
+    mirror = {'mirrorNmae':'Npm', 'storage':'-', 'lastupdatetime':'-', 'realName':'npm', 'link':'npm.mirrors.cqupt.edu.cn'}
+    mirrorsSize.append(mirror)
+
 if __name__ == '__main__':
     dir = '/data/mirror'
     log_dir = '/var/log/rsync'
@@ -44,7 +48,7 @@ if __name__ == '__main__':
         threadList.append(t)
     for t in threadList:
         t.join()
-
+    addNpm(mirrorsSize)
     end_time = time.time()
     data['mirror_list'] = mirrorsSize
     data['update_time'] = int(time.time())
