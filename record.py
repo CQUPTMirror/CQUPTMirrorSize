@@ -24,7 +24,7 @@ def getSize(mirrorsSize, sonDir, lastupdatetime):
     mirrorsSize.append(mirror)
 
 def addNpm(mirrorsSize, lastupdatetime):
-    mirror = {'mirrorNmae':'Npm', 'storage':'-', 'lastupdatetime':lastupdatetime, 'realName':'npm', 'link':'npm.mirrors.cqupt.edu.cn'}
+    mirror = {'mirrorNmae':'Npm', 'storage':'-', 'lastupdatetime':int(lastupdatetime/1000), 'realName':'npm', 'link':'npm.mirrors.cqupt.edu.cn'}
     mirrorsSize.append(mirror)
 
 if __name__ == '__main__':
