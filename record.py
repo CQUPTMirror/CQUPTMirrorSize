@@ -40,10 +40,9 @@ class CQUPTMirrorSize():
             for root, dirs, files in os.walk(os.path.join(self.mirrorDir, sonDir)):
                 size += sum([os.path.getsize(os.path.join(root, name)) for name in files])
         except OSError, e:
-            log = open(self.recordLogDir+'/error.log', 'a', 1024)
-            currentTime = time.strftime('%Y-%m-%d %X', time.localtime(time.time()))
-            log.write('[Error]: ' + str(currentTime) + ' ' + str(e) + "\n")
-            log.close()
+            with open(self.recordLogDir+'/error.log', 'a', 1024) as log:
+                currentTime = time.strftime('%Y-%m-%d %X', time.localtime(time.time()))
+                log.write('[Error]: ' + str(currentTime) + ' ' + str(e) + "\n")
         name = os.popen('ls -r ' + self.logDir + ' | grep ' + sonDir + ' | head -1').readline()[:-1]
         if name != '':
             lastUpdateTime = int(os.path.getmtime(os.path.join(self.logDir, name)))
@@ -73,10 +72,9 @@ class CQUPTMirrorSize():
                 for root, dirs, files in os.walk(os.path.join(x['dir'], x['name'])):
                     size += sum([os.path.getsize(os.path.join(root, name)) for name in files])
             except OSError, e:
-                log = open(self.recordLogDir + '/error.log', 'a', 1024)
-                currentTime = time.strftime('%Y-%m-%d %X', time.localtime(time.time()))
-                log.write('[Error]: ' + str(currentTime) + ' ' + str(e) + "\n")
-                log.close()
+                with open(self.recordLogDir + '/error.log', 'a', 1024) as log:
+                    currentTime = time.strftime('%Y-%m-%d %X', time.localtime(time.time()))
+                    log.write('[Error]: ' + str(currentTime) + ' ' + str(e) + "\n")
             mirror['mirrorName'] = x['name'].capitalize()
             mirror['realName'] = x['name']
             mirror['link'] = x['link']
@@ -96,13 +94,11 @@ class CQUPTMirrorSize():
         self.data['mirror_list'] = self.mirrors
         self.data['update_time'] = int(time.time())
         self.data['update_cost_time'] = int(self.endTime - start_time)
-        f = open(self.recordLogDir +'/main.json', 'w', 1024)
-        f.write(json.dumps(self.data))
-        f.close()
-        log = open(self.recordLogDir + '/success.log', 'a', 1024)
-        currentTime = time.strftime('%Y-%m-%d %X', time.localtime(time.time()))
-        log.write('[Info] Updated at: ' + str(currentTime) + ' cost ' + str(self.data['update_cost_time']) + "s\n")
-        log.close()
+        with open(self.recordLogDir +'/main.json', 'w', 1024) as f:
+            f.write(json.dumps(self.data))
+        with open(self.recordLogDir + '/success.log', 'a', 1024) as log:
+            currentTime = time.strftime('%Y-%m-%d %X', time.localtime(time.time()))
+            log.write('[Info] Updated at: ' + str(currentTime) + ' cost ' + str(self.data['update_cost_time']) + "s\n")
 
 if __name__ == '__main__':
     start_time = time.time()
